@@ -1,5 +1,7 @@
 pyppeteer
 psutil
+requests
+git+https://github.com/constverum/ProxyBroker.git
 git+https://github.com/zhouxianggen/pyua.git
 git+https://github.com/zhouxianggen/pyobject.git
 git+https://github.com/zhouxianggen/pyutil.git

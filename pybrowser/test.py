@@ -1,12 +1,18 @@
 # coding: utf8
 import sys
 import asyncio
+import requests
 import pyua
+from mayi_proxies import mayi
 from pybrowser import PyBrowser
 
+url = 'https://www.baidu.com/'
+#r = requests.get(url, proxies=mayi.proxies, headers=mayi.headers)
+r = requests.get(url, proxies={"https": "http://127.0.0.1:8808", 
+        "http": "http://127.0.0.1:8808"})
+print(r.status_code, len(r.content))
 
-url = 'https://blog.csdn.net/xidianbaby/article/details/87790422'
-
+"""
 async def foo():
     async with PyBrowser() as b:
         print('open url')
@@ -18,3 +24,4 @@ async def foo():
         open('content', 'w').write(content)
 
 asyncio.run(foo())
+"""
