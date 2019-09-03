@@ -4,6 +4,7 @@ import asyncio
 import requests
 import pyua
 from pyobject import PyObject
+from mayi_proxies import mayi
 from pybrowser import PyBrowser
 
 log = PyObject().log
@@ -19,8 +20,8 @@ async def intercept_response(res):
     log.info('response')
 
 
-async def test():
-    async with PyBrowser() as b:
+async def foo():
+    async with PyBrowser(proxy_server=mayi.proxies['http']) as b:
         page = await b.newPage()
         await page.evaluate("""
             () =>{
@@ -32,6 +33,7 @@ async def test():
             }
         """)
         await page.setJavaScriptEnabled(enabled=True)
+        await page.setExtraHTTPHeaders(mayi.headers)
         await page.setUserAgent(pyua.CHROME)
         await page.setRequestInterception(True)
         page.on('request', intercept_request)
@@ -41,6 +43,13 @@ async def test():
         await page.goto(url, timeout=30000)
         cookies = await page.cookies()
         log.info('cookies: {}'.format(cookies))
+        #print('wait for selector')
+        #e = await page.J('#post-397075827 > dl > dt')
+        #print(e)
+        #print('save')
+        #await page.screenshot({'path': '/data/share/foo.png'})
+        #content = await page.content()
+        #open('content', 'w').write(content)
         await asyncio.sleep(30)
 
-asyncio.run(test())
+asyncio.run(foo())
