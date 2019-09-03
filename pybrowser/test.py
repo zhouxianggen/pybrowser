@@ -1,7 +1,5 @@
 # coding: utf8
-import sys
 import asyncio
-import requests
 import pyua
 from pyobject import PyObject
 from pybrowser import PyBrowser
